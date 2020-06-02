@@ -17,10 +17,10 @@ void updateSymbolVal(char id, int val);
 %token int_command
 %token <num> number
 %token <id> identifier
-%type <num> exp term
+%type <num> exp
 %type <id> assign
-%left '+'
 %left '-'
+%left '+'
 %left '/'
 %left '*'
 
@@ -29,15 +29,14 @@ void updateSymbolVal(char id, int val);
 stmtloop:     stmtloop stmt                         {;}
 |             stmt                                  {;};
 stmt:         exp dot                               {;}
-|             print exp dot                         {printf("%d", $2);}
+|             print exp dot                         {printf("%d\n", $2);}
 |             assign dot                            {;}
 |             exit_command dot                      {exit(EXIT_SUCCESS);};
-exp:          exp '+' term                          {$$ = $1 + $3;}
-|             exp '-' term                          {$$ = $1 - $3;}
-|             exp '/' term                          {$$ = $1 / $3;}
-|             exp '*' term                          {$$ = $1 * $3;}
-|             term                                  {$$ = $1;};
-term:         number                                {$$ = $1;}
+exp:          exp '+' exp                           {$$ = ($1 + $3); printf(" -------\n avali: %d \n + \n dovomi: %d \n hasel: %d\n -------\n", $1, $3, ($1 + $3));}
+|             exp '-' exp                           {$$ = ($1 - $3); printf(" -------\n avali: %d \n - \n dovomi: %d \n hasel: %d\n -------\n", $1, $3, ($1 - $3));}
+|             exp '/' exp                           {$$ = ($1 / $3); printf(" -------\n avali: %d \n / \n dovomi: %d \n hasel: %d\n -------\n", $1, $3, ($1 / $3));}
+|             exp '*' exp                           {$$ = ($1 * $3); printf(" -------\n avali: %d \n * \n dovomi: %d \n hasel: %d\n -------\n", $1, $3, ($1 * $3));}
+|             number                                {$$ = $1;}
 |             identifier                            {$$ = symbolVal($1);}
 |             get_command                           {char str1[20]; scanf("%s", str1); $$ = atoi(str1);};
 assign:       identifier '=' exp                    {updateSymbolVal($1, $3);}
@@ -82,5 +81,5 @@ int main(void)
 
 void yyerror (char *s)
 {
-  
+
 }
