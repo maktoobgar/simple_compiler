@@ -1,12 +1,12 @@
 %{
-void yyerror (char *s);
-int yylex();
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-int symbols[52];
-int symbolVal(char id);
-void updateSymbolVal(char id, int val);
+void yyerror (char *s);
+int yylex();
+int idenValue(char id);
+void updateIdenVal(char id, int val);
+int idens[100];
 %}
 
 %union {int num; char id;}
@@ -32,20 +32,20 @@ stmt:         exp dot                               {;}
 |             print exp dot                         {printf("%d\n", $2);}
 |             assign dot                            {;}
 |             exit_command dot                      {exit(EXIT_SUCCESS);};
-exp:          exp '+' exp                           {$$ = ($1 + $3); printf(" -------\n avali: %d \n + \n dovomi: %d \n hasel: %d\n -------\n", $1, $3, ($1 + $3));}
-|             exp '-' exp                           {$$ = ($1 - $3); printf(" -------\n avali: %d \n - \n dovomi: %d \n hasel: %d\n -------\n", $1, $3, ($1 - $3));}
-|             exp '/' exp                           {$$ = ($1 / $3); printf(" -------\n avali: %d \n / \n dovomi: %d \n hasel: %d\n -------\n", $1, $3, ($1 / $3));}
-|             exp '*' exp                           {$$ = ($1 * $3); printf(" -------\n avali: %d \n * \n dovomi: %d \n hasel: %d\n -------\n", $1, $3, ($1 * $3));}
+exp:          exp '+' exp                           {$$ = ($1 + $3); }
+|             exp '-' exp                           {$$ = ($1 - $3); }
+|             exp '/' exp                           {$$ = ($1 / $3); }
+|             exp '*' exp                           {$$ = ($1 * $3); }
 |             number                                {$$ = $1;}
-|             identifier                            {$$ = symbolVal($1);}
+|             identifier                            {$$ = idenValue($1);}
 |             get_command                           {char str1[20]; scanf("%s", str1); $$ = atoi(str1);};
-assign:       identifier '=' exp                    {updateSymbolVal($1, $3);}
-|             int_command identifier '=' exp        {updateSymbolVal($2, $4);};
+assign:       identifier '=' exp                    {updateIdenVal($1, $3);}
+|             int_command identifier '=' exp        {updateIdenVal($2, $4);};
 dot:          ';'                                   {;};
 
 %%
 
-int computeSymbolIndex(char id)
+int indenIndex(char id)
 {
 	int idx = -1;
 	if(islower(id)) {
@@ -56,16 +56,16 @@ int computeSymbolIndex(char id)
 	return idx;
 }
 
-int symbolVal(char id)
+int idenValue(char id)
 {
-	int index = computeSymbolIndex(id);
-	return symbols[index];
+	int index = indenIndex(id);
+	return idens[index];
 }
 
-void updateSymbolVal(char id, int val)
+void updateIdenVal(char id, int val)
 {
-	int bucket = computeSymbolIndex(id);
-	symbols[bucket] = val;
+	int index = indenIndex(id);
+	idens[index] = val;
 }
 
 int main(void)
@@ -73,7 +73,7 @@ int main(void)
 	int i;
 	for(i = 0; i < 52; i++)
   {
-		symbols[i] = 0;
+		idens[i] = 0;
 	}
 	return yyparse ();
   return 0;
@@ -81,5 +81,6 @@ int main(void)
 
 void yyerror (char *s)
 {
-
+	printf("Syntaxerror\n");
+	yyparse();
 }

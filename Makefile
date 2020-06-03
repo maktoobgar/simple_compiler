@@ -1,12 +1,8 @@
-calc: lex.yy.c y.tab.c
-	gcc -g lex.yy.c y.tab.c -o calc
+lex.yy.c: flex.l
+	lex flex.l
 
-lex.yy.c: y.tab.c calc.l
-	lex calc.l
+y.tab.c and y.tab.h:
+	yacc conf.y -d
 
-y.tab.c: calc.y
-	yacc -d calc.y
-
-clean: 
-	rm -rf lex.yy.c y.tab.c y.tab.h calc calc.dSYM
-
+a.out: lex.yy.c y.tab.c y.tab.h
+	gcc lex.yy.c y.tab.c
