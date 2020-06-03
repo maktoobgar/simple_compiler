@@ -12,7 +12,8 @@ void yyerror (char *s);
 [0-9]+                    {yylval.num = atoi(yytext); return number;}
 [ \t\n]                   {;}
 [-+*/=;]                  {return yytext[0];}
-.                         {ECHO; yyerror ("unexpected character");}
+[a-zA-Z0-9][a-zA-Z0-9_]+  {printf("lex:just one single character variable names are allowed\n");}
+.                         {printf("lex:Invalid characters inserted\n");}
 
 %%
 

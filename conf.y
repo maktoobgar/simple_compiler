@@ -6,7 +6,7 @@ void yyerror (char *s);
 int yylex();
 int idenValue(char id);
 void updateIdenVal(char id, int val);
-int idens[100];
+int idens[52];
 %}
 
 %union {int num; char id;}
@@ -81,6 +81,6 @@ int main(void)
 
 void yyerror (char *s)
 {
-	printf("Syntaxerror\n");
+	printf("parser:Syntaxerror\n");
 	yyparse();
 }
