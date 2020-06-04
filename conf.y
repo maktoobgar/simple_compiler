@@ -17,12 +17,15 @@ int idens[52];
 %token int_command
 %token <num> number
 %token <id> identifier
+%token <str> string
 %type <num> exp
 %type <id> assign
-%left '-'
+%left '-'									//left associative operator
 %left '+'
 %left '/'
+%left '%'
 %left '*'
+%right '('								//right associative operator
 
 %%
 
@@ -32,10 +35,12 @@ stmt:         exp dot                               {;}
 |             print exp dot                         {printf("%d\n", $2);}
 |             assign dot                            {;}
 |             exit_command dot                      {exit(EXIT_SUCCESS);};
-exp:          exp '+' exp                           {$$ = ($1 + $3); }
-|             exp '-' exp                           {$$ = ($1 - $3); }
-|             exp '/' exp                           {$$ = ($1 / $3); }
-|             exp '*' exp                           {$$ = ($1 * $3); }
+exp:          exp '+' exp                           {$$ = ($1 + $3);}
+|             exp '-' exp                           {$$ = ($1 - $3);}
+|             exp '/' exp                           {$$ = ($1 / $3);}
+|             exp '*' exp                           {$$ = ($1 * $3);}
+|							exp '%' exp														{$$ = ($1 % $3);}
+|							'(' exp ')'														{$$ = $2;}
 |             number                                {$$ = $1;}
 |             identifier                            {$$ = idenValue($1);}
 |             get_command                           {char str1[20]; scanf("%s", str1); $$ = atoi(str1);};
