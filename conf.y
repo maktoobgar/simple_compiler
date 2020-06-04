@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <unistd.h>
 void yyerror (char *s);
 int yylex();
 int idenValue(char id);
@@ -25,6 +26,7 @@ int idens[52];
 %left '/'
 %left '%'
 %left '*'
+%left '^'
 %right '('								//right associative operator
 
 %%
@@ -40,6 +42,7 @@ exp:          exp '+' exp                           {$$ = ($1 + $3);}
 |             exp '/' exp                           {$$ = ($1 / $3);}
 |             exp '*' exp                           {$$ = ($1 * $3);}
 |							exp '%' exp														{$$ = ($1 % $3);}
+|							exp '^' '(' exp ')'										{int result = 1; for(int i = 0; i < $4; i++) result = result * $1; $$ = result;}
 |							'(' exp ')'														{$$ = $2;}
 |             number                                {$$ = $1;}
 |             identifier                            {$$ = idenValue($1);}
@@ -73,14 +76,14 @@ void updateIdenVal(char id, int val)
 	idens[index] = val;
 }
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	int i;
+	int i = 0;
 	for(i = 0; i < 52; i++)
   {
 		idens[i] = 0;
 	}
-	return yyparse ();
+	yyparse ();
   return 0;
 }
 
