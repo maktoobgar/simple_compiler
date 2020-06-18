@@ -6,3 +6,5 @@ y.tab.c and y.tab.h:
 
 a.out: lex.yy.c y.tab.c y.tab.h
 	gcc lex.yy.c y.tab.c
+
+conf.output (a file for debugging conflicts): bison -v

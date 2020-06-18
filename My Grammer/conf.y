@@ -18,7 +18,6 @@ int idens[52];
 %token int_command
 %token <num> number
 %token <id> identifier
-%token <str> string
 %type <num> exp
 %type <id> assign
 %left '-'									//left associative operator
