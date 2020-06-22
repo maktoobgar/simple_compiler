@@ -40,31 +40,28 @@ var_decl_id:						ID COMMA
 type_specifier:					INT
 |												VOID
 |												BOOL;
-fun_declaration:				type_specifier ID LEFT_PARENTHESES params LEFT_BRACE statements RIGHT_BRACE;
+fun_declaration:				type_specifier ID LEFT_PARENTHESES params LEFT_BRACE compound_stmt RIGHT_BRACE;
 params:									param_list
-|												;
-param_list:							param_list COMMA param_type_list
-|												param_type_list;
+|												RIGHT_PARENTHESES;
+param_list:							param_type_list param_list
+|												param_type_list RIGHT_PARENTHESES;
 param_type_list:				type_specifier param_id_list;
 param_id_list:					ID COMMA param_id_list
 |												ID LEFT_BRAKET NUM RIGHT_BRAKET COMMA param_id_list
-|												ID RIGHT_PARENTHESES
-|												ID LEFT_BRAKET NUM RIGHT_BRAKET RIGHT_PARENTHESES
-compound_stmt:					LEFT_BRACE local_declarations statement_list RIGHT_BRACE;
+|												ID SIMICOLON
+|												ID LEFT_BRAKET NUM RIGHT_BRAKET SIMICOLON
+compound_stmt:					local_declarations statements
+|												local_declarations;
 local_declarations:			local_declarations var_declaration
-|												;
-statement_list:					statement_list statement
 |												;
 statements:							statements statement
 |												statement;
 statement:							expression_stmt
-|												compound_stmt
 |												before_selection_stmt
 |												iteration_stmt
 |												return_stmt
 |												break_stmt;
-expression_stmt:				before_expression SIMICOLON
-|												SIMICOLON;
+expression_stmt:				before_expression SIMICOLON;
 before_selection_stmt:	IF LEFT_PARENTHESES before_expression RIGHT_PARENTHESES statement selection_stmt;
 selection_stmt:					ELSE statement
 |												SIMICOLON;
