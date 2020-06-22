@@ -84,7 +84,7 @@ or_expression:					or_expression AND unary_rel_expression
 |												unary_rel_expression;
 unary_rel_expression:		NOT unary_rel_expression
 |												rel_expression;
-rel_expression:					add_expression relop add_expression
+rel_expression:					rel_expression relop add_expression
 |												add_expression;
 relop:									MINEQUAL
 |												MAXEQUAL
