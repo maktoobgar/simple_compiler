@@ -23,8 +23,8 @@ int yywrap();
 "%"                                                               {return DIVIDE_REMAINING;}
 "<"                                                               {return MIN;}
 ">"                                                               {return MAX;}
-"|"                                                               {return OR;}
-"&"                                                               {return AND;}
+"||"                                                              {return OR;}
+"&&"                                                              {return AND;}
 "!"                                                               {return NOT;}
 "="                                                               {return EQUAL;}
 "("                                                               {return LEFT_PARENTHESES;}
