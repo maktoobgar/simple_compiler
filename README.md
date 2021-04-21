@@ -49,4 +49,11 @@ I'm not a guy to say where to start exactly, but I do can help a little.
 3. Know the language that you want to go with it. (I chose C Language, you can use whatever you like - I heard you can use python as a lexer and parser generator)
 4. Go for it.
 
+## More Stuff
+
+If you chose your target language to be C, make sure to checkout this repository.\
+https://github.com/DoctorWkt/acwj\
+This guy made a huge favor to us.
+
+
 Hope you all have a nice day. 😊
