@@ -30,7 +30,7 @@ And at the end, if you want to see the grammar of the language, you can see it h
 
 ![](./My%20Grammer/Grammer.jpg)
 
-# So What is C-Grammer Folder?
+# So What Is C-Grammer Folder?
 
 I was trying to create some little more complex programming language based on C Language buy I wasn't so successful in it and it was so much more complex than I expected.\
 But i tried my best and if anyone can fix it to solve the conflicts, send me the solution in a pull request.
@@ -52,7 +52,8 @@ I'm not a guy to say where to start exactly, but I do can help a little.
 ## More Stuff
 
 If you chose your target language to be C, make sure to checkout this repository.\
-https://github.com/DoctorWkt/acwj\
+https://github.com/DoctorWkt/acwj
+
 This guy made a huge favor to us.
 
 
